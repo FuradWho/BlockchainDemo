@@ -54,12 +54,36 @@ func (block *Block) SetHash() {
 	block.Hash = hash[:]
 }
 
+// 4. 引入区块链，我们使用一个Block数组把它看作为区块链，每一次新增一个区块
+type BlockChain struct {
+	Blocks []*Block
+}
+
+// 实现创建区块链的方法
+func NewBlockChain() *BlockChain {
+
+	//在创建一个区块链的时候，添加一个区块，为 初始块
+
+	genesisBlock := NewBlock(genesisInfo, []byte{0x0000000000000000})
+
+	blockChain := BlockChain{
+		Blocks: []*Block{genesisBlock},
+	}
+
+	return &blockChain
+
+}
+
 func main() {
 
-	block := NewBlock(genesisInfo, []byte{0x0000000000000000})
+	bc := NewBlockChain()
+	fmt.Println("创建第一个区块链")
 
-	fmt.Println("创建第一个区块")
-	fmt.Printf("PrevBlockHash : %x\n", block.PrevBlockHash)
-	fmt.Printf("Hash : %x\n", block.Hash)
-	fmt.Printf("Data : %s\n", block.Data)
+	for _, block := range bc.Blocks {
+
+		fmt.Printf("PrevBlockHash : %x\n", block.PrevBlockHash)
+		fmt.Printf("Hash : %x\n", block.Hash)
+		fmt.Printf("Data : %s\n", block.Data)
+	}
+
 }
