@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"crypto/sha256"
+	"fmt"
+)
 
 /*
 大致流程：
@@ -35,7 +38,20 @@ func NewBlock(data string, prevBlockHash []byte) *Block {
 		Data:          []byte(data),
 	}
 
+	block.SetHash() //生成Hash值
+
 	return &block
+}
+
+// 我们实现一个简单的函数，去进行哈希值的计算，没有随机值，没有难度值
+func (block *Block) SetHash() {
+	var data []byte
+	data = append(data, block.PrevBlockHash...) //使用前区块的hash值和该区块的数据
+	data = append(data, block.Data...)
+
+	hash := sha256.Sum256(data)
+
+	block.Hash = hash[:]
 }
 
 func main() {
