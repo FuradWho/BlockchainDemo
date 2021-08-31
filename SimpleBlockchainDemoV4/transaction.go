@@ -61,9 +61,6 @@ func NewCoinbaseTx(miner string, data string) *Transaction {
 	return &tx
 }
 
-//内部逻辑：
-//
-
 func NewTransaction(from, to string, amount float64, bc *BlockChain) *Transaction {
 
 	utxos := make(map[string][]int64) //标识能用的utxo

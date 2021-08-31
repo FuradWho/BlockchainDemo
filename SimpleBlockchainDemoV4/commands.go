@@ -39,3 +39,33 @@ func (cli *CLI) PrintChain() {
 		}
 	}
 }
+
+func (cli *CLI) Send(from, to string, amount float64, miner string, data string) {
+
+	bc := NewBlockChain()
+
+	if bc == nil {
+		return
+	}
+
+	defer bc.db.Close()
+
+	//1. 创建挖矿交易
+	coinbase := NewCoinbaseTx(miner, data)
+
+	txs := []*Transaction{coinbase}
+
+	//2. 创建普通交易
+	tx := NewTransaction(from, to, amount, bc)
+
+	if tx != nil {
+		txs = append(txs, tx)
+	} else {
+		fmt.Printf("发现无效交易，过滤!\n")
+	}
+
+	//3. 添加到区块
+	bc.AddBlock(txs)
+
+	fmt.Printf("挖矿成功!")
+}

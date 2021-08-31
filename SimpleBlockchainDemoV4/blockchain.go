@@ -19,13 +19,17 @@ const blockBucketName = "blockBucket"
 const lastHashKey = "lastHashKey"
 
 // 实现创建区块链的方法
-func NewBlockChain(miner string) *BlockChain {
+func NewBlockChain() *BlockChain {
+
+	if !IsFileExist(blockChainName) {
+		fmt.Printf("区块链不存在，请先创建!\n")
+		return nil
+	}
 
 	//功能分析：
 	//1. 获得数据库的句柄，打开数据库，读写数据
+
 	db, err := bolt.Open(blockChainName, 0600, nil)
-	//向数据库中写入数据
-	//从数据库中读取数据
 
 	if err != nil {
 		log.Panic(err)
@@ -35,41 +39,20 @@ func NewBlockChain(miner string) *BlockChain {
 
 	var tail []byte
 
-	db.Update(func(tx *bolt.Tx) error {
+	db.View(func(tx *bolt.Tx) error {
 		b := tx.Bucket([]byte(blockBucketName))
 
 		if b == nil {
-			//如果b1为空，说明名字为"buckeName1"这个桶不存在，我们需要创建之
-			fmt.Printf("bucket不存在，准备创建!\n")
-			b, err = tx.CreateBucket([]byte(blockBucketName))
-
-			if err != nil {
-				log.Panic(err)
-			}
-
-			//抽屉准备完毕，开始添加创世块
-
-			coinbase := NewCoinbaseTx(miner)
-
-			genesisBlock := NewBlock([]*Transaction{coinbase}, []byte{})
-			b.Put(genesisBlock.Hash, genesisBlock.Serialize() /*将区块序列化，转成字节流*/)
-			b.Put([]byte(lastHashKey), genesisBlock.Hash)
-
-			//为了测试，我们把写入的数据读取出来，如果没问题，注释掉这段代码
-			//blockInfo := b.Get(genesisBlock.Hash)
-			//block := Deserialize(blockInfo)
-			//fmt.Printf("解码后的block数据:%s\n", block)
-
-			tail = genesisBlock.Hash
-		} else {
-			tail = b.Get([]byte(lastHashKey))
+			fmt.Printf("区块链bucket为空，请检查!\n")
+			os.Exit(1)
 		}
+
+		tail = b.Get([]byte(lastHashKey))
 
 		return nil
 	})
 
 	return &BlockChain{db, tail}
-
 }
 
 // 5. 添加区块
@@ -92,9 +75,6 @@ func (bc *BlockChain) AddBlock(txs []*Transaction) {
 		return nil
 	})
 }
-
-//实现思路：
-//
 
 func (bc *BlockChain) FindMyUtoxs(address string) []TXOutput {
 	fmt.Printf("FindMyUtoxs\n")
@@ -119,9 +99,6 @@ func (bc *BlockChain) FindMyUtoxs(address string) []TXOutput {
 					fmt.Printf("找到了消耗过的output! index : %d\n", input.Index)
 					key := string(input.TXID)
 					spentUTXOs[key] = append(spentUTXOs[key], input.Index)
-					//spentUTXOs[0x222] = []int64{0}
-					//spentUTXOs[0x333] = []int64{0}  //中间状态
-					//spentUTXOs[0x333] = []int64{0, 1}
 				}
 			}
 
@@ -165,7 +142,7 @@ func (bc *BlockChain) GetBalance(address string) {
 	var total = 0.0
 
 	for _, utxo := range utxos {
-		total += utxo.Value //10, 3, 1
+		total += utxo.Value
 	}
 
 	fmt.Printf("%s 的余额为: %f\n", address, total)
@@ -223,9 +200,6 @@ func (bc *BlockChain) FindNeedUtxos(from string, amount float64) (map[string][]i
 				//4. 找到属于我的所有output
 				if from == output.Address {
 					fmt.Printf("找到了属于 %s 的output, i : %d\n", from, i)
-					//UTXOs = append(UTXOs, output)
-					//在这里实现控制逻辑
-					//找到符合条件的output
 					//1. 添加到返回结构中needUtxos
 					needUtxos[key] = append(needUtxos[key], int64(i))
 					resValue += output.Value
