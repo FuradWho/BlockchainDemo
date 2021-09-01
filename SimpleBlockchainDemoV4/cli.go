@@ -7,7 +7,7 @@ import (
 )
 
 const Usage = `
-	./blockchain addBlock "xxxx"   添加数据到区块链
+	./blockchain createBlockChain 地址 "创建区块链"
 	./blockchain printChain          打印区块链
 	./blockchain getBalance          获取地址的余额
 	./blockchain send from to amount miner		转账命令
@@ -29,9 +29,16 @@ func (cli *CLI) Run() {
 	}
 
 	switch cmds[1] {
-	case "addBlock":
-		data := cmds[2]
-		fmt.Printf("添加区块命令调用, 数据：%s\n", data) //添加区块的时候： bc.addBlock(data), data 通过os.Args拿回来
+	case "createBlockChain":
+		if len(cmds) != 3 {
+			fmt.Printf(Usage)
+			os.Exit(1)
+		}
+
+		fmt.Printf("创建区块链命令被调用!\n")
+
+		addr := cmds[2]
+		cli.CreateBlockChain(addr)
 
 	case "printChain":
 		fmt.Printf("打印区块链命令调用\n") //打印区块链时候：遍历区块链，不需要外部输入数据

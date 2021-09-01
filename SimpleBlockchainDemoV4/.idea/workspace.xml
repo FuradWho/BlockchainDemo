@@ -22,13 +22,12 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="91fb637c-7db7-43d0-a2bb-920cff8e4ccd" name="Default Changelist" comment="v4版本">
+    <list default="true" id="91fb637c-7db7-43d0-a2bb-920cff8e4ccd" name="Default Changelist" comment="v4版本 转账命令添加">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/blockchain.go" beforeDir="false" afterPath="$PROJECT_DIR$/blockchain.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cli.go" beforeDir="false" afterPath="$PROJECT_DIR$/cli.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/commands.go" beforeDir="false" afterPath="$PROJECT_DIR$/commands.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/transaction.go" beforeDir="false" afterPath="$PROJECT_DIR$/transaction.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils.go" beforeDir="false" afterPath="$PROJECT_DIR$/utils.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/简易区块链V4.md" beforeDir="false" afterPath="$PROJECT_DIR$/简易区块链V4.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -82,7 +81,8 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1630307114548</updated>
-      <workItem from="1630307116363" duration="4340000" />
+      <workItem from="1630307116363" duration="5641000" />
+      <workItem from="1630476180575" duration="945000" />
     </task>
     <task id="LOCAL-00001" summary="v4版本">
       <created>1630309291506</created>
@@ -91,7 +91,14 @@
       <option name="project" value="LOCAL" />
       <updated>1630309291506</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="v4版本 转账命令添加">
+      <created>1630395487139</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1630395487139</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -107,10 +114,12 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="v4版本" />
-    <option name="LAST_COMMIT_MESSAGE" value="v4版本" />
+    <MESSAGE value="v4版本 转账命令添加" />
+    <option name="LAST_COMMIT_MESSAGE" value="v4版本 转账命令添加" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
@@ -121,9 +130,9 @@
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
     <state x="740" y="309" key="FileChooserDialogImpl/-1920.30.1920.1050/0.30.1920.1050@0.30.1920.1050" timestamp="1630393788267" />
-    <state x="552" y="287" key="Vcs.Push.Dialog.v2" timestamp="1630309297400">
+    <state x="552" y="287" key="Vcs.Push.Dialog.v2" timestamp="1630395489413">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state x="552" y="287" key="Vcs.Push.Dialog.v2/-1920.30.1920.1050/0.30.1920.1050@0.30.1920.1050" timestamp="1630309297400" />
+    <state x="552" y="287" key="Vcs.Push.Dialog.v2/-1920.30.1920.1050/0.30.1920.1050@0.30.1920.1050" timestamp="1630395489413" />
   </component>
 </project>

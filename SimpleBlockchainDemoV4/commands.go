@@ -69,3 +69,11 @@ func (cli *CLI) Send(from, to string, amount float64, miner string, data string)
 
 	fmt.Printf("挖矿成功!")
 }
+
+func (cli *CLI) CreateBlockChain(addr string) {
+	bc := CreateBlockChain(addr)
+	if bc != nil {
+		defer bc.db.Close()
+	}
+	fmt.Printf("创建区块链成功!\n")
+}
