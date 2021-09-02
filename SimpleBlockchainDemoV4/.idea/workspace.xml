@@ -22,13 +22,19 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="91fb637c-7db7-43d0-a2bb-920cff8e4ccd" name="Default Changelist" comment="v4版本 转账命令添加">
+    <list default="true" id="91fb637c-7db7-43d0-a2bb-920cff8e4ccd" name="Default Changelist" comment="v4版本 完成">
+      <change afterPath="$PROJECT_DIR$/.idea/runConfigurations.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SimpleBlockchainDemoV5/block.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SimpleBlockchainDemoV5/blockchain.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SimpleBlockchainDemoV5/cli.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SimpleBlockchainDemoV5/commands.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SimpleBlockchainDemoV5/main.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SimpleBlockchainDemoV5/proofofwork.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SimpleBlockchainDemoV5/transaction.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SimpleBlockchainDemoV5/utils.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SimpleBlockchainDemoV5/wallet.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SimpleBlockchainDemoV5/wallets.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blockchain.go" beforeDir="false" afterPath="$PROJECT_DIR$/blockchain.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cli.go" beforeDir="false" afterPath="$PROJECT_DIR$/cli.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/commands.go" beforeDir="false" afterPath="$PROJECT_DIR$/commands.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/transaction.go" beforeDir="false" afterPath="$PROJECT_DIR$/transaction.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/简易区块链V4.md" beforeDir="false" afterPath="$PROJECT_DIR$/简易区块链V4.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,11 +64,14 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
+    <property name="go.formatter.settings.were.checked" value="true" />
     <property name="go.import.settings.migrated" value="true" />
     <property name="last_opened_file_path" value="D:/BaiduNetdiskDownload/资料-贴合企业实战5天深入掌握比特币技术/day4/02-代码/03-beijing-term2" />
-    <property name="settings.editor.selected.configurable" value="configurable.group.editor" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RebelAgentSelection">
@@ -82,7 +91,9 @@
       <option name="presentableId" value="Default" />
       <updated>1630307114548</updated>
       <workItem from="1630307116363" duration="5641000" />
-      <workItem from="1630476180575" duration="945000" />
+      <workItem from="1630476180575" duration="1298000" />
+      <workItem from="1630477567594" duration="301000" />
+      <workItem from="1630563422827" duration="822000" />
     </task>
     <task id="LOCAL-00001" summary="v4版本">
       <created>1630309291506</created>
@@ -98,7 +109,14 @@
       <option name="project" value="LOCAL" />
       <updated>1630395487139</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="v4版本 完成">
+      <created>1630477188126</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1630477188126</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -119,20 +137,41 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="v4版本" />
     <MESSAGE value="v4版本 转账命令添加" />
-    <option name="LAST_COMMIT_MESSAGE" value="v4版本 转账命令添加" />
+    <MESSAGE value="v4版本 完成" />
+    <option name="LAST_COMMIT_MESSAGE" value="v4版本 完成" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
     <auto-vendoring-mode>false</auto-vendoring-mode>
   </component>
   <component name="WindowStateProjectService">
+    <state x="552" y="195" key="#Plugins" timestamp="1630477687302">
+      <screen x="0" y="30" width="1920" height="1050" />
+    </state>
+    <state x="552" y="195" key="#Plugins/-1920.30.1920.1050/0.30.1920.1050@0.30.1920.1050" timestamp="1630477687302" />
+    <state x="414" y="209" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1630477862300">
+      <screen x="0" y="30" width="1920" height="1050" />
+    </state>
+    <state x="414" y="209" key="#com.intellij.execution.impl.EditConfigurationsDialog/-1920.30.1920.1050/0.30.1920.1050@0.30.1920.1050" timestamp="1630477862300" />
+    <state x="640" y="288" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1630477391652">
+      <screen x="0" y="30" width="1920" height="1050" />
+    </state>
+    <state x="640" y="288" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/-1920.30.1920.1050/0.30.1920.1050@0.30.1920.1050" timestamp="1630477391652" />
     <state x="740" y="309" key="FileChooserDialogImpl" timestamp="1630393788267">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
     <state x="740" y="309" key="FileChooserDialogImpl/-1920.30.1920.1050/0.30.1920.1050@0.30.1920.1050" timestamp="1630393788267" />
-    <state x="552" y="287" key="Vcs.Push.Dialog.v2" timestamp="1630395489413">
+    <state x="540" y="288" key="IDE.errors.dialog" timestamp="1630477611497">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state x="552" y="287" key="Vcs.Push.Dialog.v2/-1920.30.1920.1050/0.30.1920.1050@0.30.1920.1050" timestamp="1630395489413" />
+    <state x="540" y="288" key="IDE.errors.dialog/-1920.30.1920.1050/0.30.1920.1050@0.30.1920.1050" timestamp="1630477611497" />
+    <state x="453" y="198" key="SettingsEditor" timestamp="1630477656004">
+      <screen x="0" y="30" width="1920" height="1050" />
+    </state>
+    <state x="453" y="198" key="SettingsEditor/-1920.30.1920.1050/0.30.1920.1050@0.30.1920.1050" timestamp="1630477656004" />
+    <state x="552" y="287" key="Vcs.Push.Dialog.v2" timestamp="1630477193186">
+      <screen x="0" y="30" width="1920" height="1050" />
+    </state>
+    <state x="552" y="287" key="Vcs.Push.Dialog.v2/-1920.30.1920.1050/0.30.1920.1050@0.30.1920.1050" timestamp="1630477193186" />
   </component>
 </project>
