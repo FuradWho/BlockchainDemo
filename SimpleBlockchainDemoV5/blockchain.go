@@ -2,13 +2,18 @@ package main
 
 import (
 	"SimpleBlockchainDemoV5/base58"
-	"bytes"
-	"fmt"
 	"github.com/boltdb/bolt"
 	"log"
+	"fmt"
 	"os"
+	"bytes"
+
+	"crypto/ecdsa"
 )
 
+//使用bolt进行改写，需要两个字段：
+//1. bolt数据库的句柄
+//2. 最后一个区块的哈希值
 type BlockChain struct {
 	db   *bolt.DB //句柄
 	tail []byte   //最后一个区块的哈希值
@@ -107,6 +112,20 @@ func NewBlockChain() *BlockChain {
 
 //添加区块
 func (bc *BlockChain) AddBlock(txs []*Transaction) {
+	//矿工得到交易时，第一时间对交易进行验证
+	//矿工如果不验证，即使挖矿成功，广播区块后，其他的验证矿工，仍然会校验每一笔交易
+
+	validTXs := []*Transaction{}
+
+	for _, tx := range txs {
+		if bc.VerifyTransaction(tx) {
+			fmt.Printf("--- 该交易有效: %x\n", tx.TXid)
+			validTXs = append(validTXs, tx)
+		} else {
+			fmt.Printf("发现无效的交易: %x\n", tx.TXid)
+		}
+	}
+
 	//1. 创建一个区块
 	bc.db.Update(func(tx *bolt.Tx) error {
 		b := tx.Bucket([]byte(blockBucketName))
@@ -116,7 +135,7 @@ func (bc *BlockChain) AddBlock(txs []*Transaction) {
 			os.Exit(1)
 		}
 
-		block := NewBlock(txs, bc.tail)
+		block := NewBlock(validTXs, bc.tail)
 		b.Put(block.Hash, block.Serialize() /*将区块序列化，转成字节流*/)
 		b.Put([]byte(lastHashKey), block.Hash)
 
@@ -215,7 +234,7 @@ func (bc *BlockChain) FindMyUtoxs(pubKeyHash []byte) []UTXOInfo {
 			indexes /*[]int64{0,1}*/ := spentUTXOs[key]
 
 		OUTPUT:
-			//3. 遍历output
+		//3. 遍历output
 			for i, output := range tx.TXOutputs {
 
 				if len(indexes) != 0 {
@@ -252,7 +271,7 @@ func (bc *BlockChain) GetBalance(address string) {
 	//这个过程，不要打开钱包，因为有可能查看余额的人不是地址本人
 	decodeInfo := base58.Decode(address)
 
-	pubKeyHash := decodeInfo[1 : len(decodeInfo)-4]
+	pubKeyHash := decodeInfo[1:len(decodeInfo)-4]
 
 	utxoinfos := bc.FindMyUtoxs(pubKeyHash)
 
@@ -289,4 +308,82 @@ func (bc *BlockChain) FindNeedUtxos(pubKeyHash []byte, amount float64) (map[stri
 		}
 	}
 	return needUtxos, resValue
+}
+
+func (bc *BlockChain) SignTransaction(tx *Transaction, privateKey *ecdsa.PrivateKey) {
+	//1. 遍历账本找到所有应用交易
+
+	prevTXs := make(map[string]Transaction)
+
+	//遍历tx的inputs，通过id去查找所引用的交易
+	for _, input := range tx.TXInputs {
+		prevTx := bc.FindTransaction(input.TXID)
+
+		if prevTx == nil {
+			fmt.Printf("没有找到交易: %x\n", input.TXID)
+		} else {
+			//把找到的引用交易保存起来
+			//0x222
+			//0x333
+			prevTXs[string(input.TXID)] = *prevTx
+		}
+	}
+
+	tx.Sign(privateKey, prevTXs)
+}
+
+//矿工校验流程
+//1. 找到交易input所引用的所有的交易prevTXs
+//2. 对交易进行校验
+func (bc *BlockChain) VerifyTransaction(tx *Transaction) bool {
+
+	//校验的时候，如果是挖矿交易，直接返回true
+	if tx.IsCoinbase() {
+		return true
+	}
+
+	prevTXs := make(map[string]Transaction)
+
+	//遍历tx的inputs，通过id去查找所引用的交易
+	for _, input := range tx.TXInputs {
+		prevTx := bc.FindTransaction(input.TXID)
+
+		if prevTx == nil {
+			fmt.Printf("没有找到交易: %x\n", input.TXID)
+		} else {
+			//把找到的引用交易保存起来
+			//0x222
+			//0x333
+			prevTXs[string(input.TXID)] = *prevTx
+		}
+	}
+
+	return tx.Verify(prevTXs)
+}
+
+func (bc *BlockChain) FindTransaction(txid []byte) *Transaction {
+
+	//遍历区块链的交易
+	//通过对比id来识别
+
+	it := bc.NewIterator()
+
+	for {
+		block := it.Next()
+
+		for _, tx := range block.Transactions {
+
+			//如果找到相同id交易，直接返回交易即可
+			if bytes.Equal(tx.TXid, txid) {
+				fmt.Printf("找到了所引用交易: %x\n", tx.TXid)
+				return tx
+			}
+		}
+
+		if len(block.PrevBlockHash) == 0 {
+			break
+		}
+	}
+
+	return nil
 }

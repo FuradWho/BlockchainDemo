@@ -8,6 +8,12 @@ import (
 	"io/ioutil"
 )
 
+//Wallets结构
+//把地址和秘钥对对应起来
+//map[address1] -> walletKeyPair1
+//map[address2] -> walletKeyPair2
+//map[address3] -> walletKeyPair3
+
 type Wallets struct {
 	WalletsMap map[string]*WalletKeyPair
 }
