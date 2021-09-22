@@ -2,13 +2,12 @@ package main
 
 import (
 	"SimpleBlockchainDemoV5/base58"
+	"bytes"
+	"crypto/ecdsa"
+	"fmt"
 	"github.com/boltdb/bolt"
 	"log"
-	"fmt"
 	"os"
-	"bytes"
-
-	"crypto/ecdsa"
 )
 
 //使用bolt进行改写，需要两个字段：
@@ -234,7 +233,7 @@ func (bc *BlockChain) FindMyUtoxs(pubKeyHash []byte) []UTXOInfo {
 			indexes /*[]int64{0,1}*/ := spentUTXOs[key]
 
 		OUTPUT:
-		//3. 遍历output
+			//3. 遍历output
 			for i, output := range tx.TXOutputs {
 
 				if len(indexes) != 0 {
@@ -271,7 +270,7 @@ func (bc *BlockChain) GetBalance(address string) {
 	//这个过程，不要打开钱包，因为有可能查看余额的人不是地址本人
 	decodeInfo := base58.Decode(address)
 
-	pubKeyHash := decodeInfo[1:len(decodeInfo)-4]
+	pubKeyHash := decodeInfo[1 : len(decodeInfo)-4]
 
 	utxoinfos := bc.FindMyUtoxs(pubKeyHash)
 

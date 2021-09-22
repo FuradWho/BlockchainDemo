@@ -1,14 +1,14 @@
 package main
 
 import (
+	"SimpleBlockchainDemoV5/base58"
+	"bytes"
 	"crypto/ecdsa"
 	"crypto/elliptic"
 	"crypto/rand"
-	"log"
 	"crypto/sha256"
 	"golang.org/x/crypto/ripemd160"
-	"./base58"
-	"bytes"
+	"log"
 )
 
 //1. 创建一个结构WalletKeyPair秘钥对，保存公钥和私钥
@@ -70,7 +70,7 @@ func IsValidAddress(address string) bool {
 		return false
 	}
 
-	payload := decodeInfo[0:len(decodeInfo)-4]
+	payload := decodeInfo[0 : len(decodeInfo)-4]
 	//自己求出来的校验码
 	checksum1 := CheckSum(payload)
 

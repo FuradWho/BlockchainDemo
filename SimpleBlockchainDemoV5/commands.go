@@ -9,6 +9,12 @@ import (
 //实现具体的命令
 
 func (cli *CLI) CreateBlockChain(addr string) {
+
+	if !IsValidAddress(addr) {
+		fmt.Printf("%s 是无效地址!\n", addr)
+		return
+	}
+
 	bc := CreateBlockChain(addr)
 	if bc != nil {
 		defer bc.db.Close()
@@ -17,6 +23,12 @@ func (cli *CLI) CreateBlockChain(addr string) {
 }
 
 func (cli *CLI) GetBalance(addr string) {
+
+	if !IsValidAddress(addr) {
+		fmt.Printf("%s 是无效地址!\n", addr)
+		return
+	}
+
 	bc := NewBlockChain()
 	if bc == nil {
 		return
@@ -66,6 +78,21 @@ func (cli *CLI) PrintChain() {
 
 func (cli *CLI) Send(from, to string, amount float64, miner string, data string) {
 
+	if !IsValidAddress(from) {
+		fmt.Printf("from : %s 是无效地址!\n", from)
+		return
+	}
+
+	if !IsValidAddress(to) {
+		fmt.Printf("to : %s 是无效地址!\n", to)
+		return
+	}
+
+	if !IsValidAddress(miner) {
+		fmt.Printf("miner : %s 是无效地址!\n", miner)
+		return
+	}
+
 	bc := NewBlockChain()
 
 	if bc == nil {
@@ -107,5 +134,30 @@ func (cli *CLI) ListAddresses() {
 	addresses := ws.ListAddress()
 	for _, address := range addresses {
 		fmt.Printf("address : %s\n", address)
+	}
+}
+
+func (cli *CLI) PrintTx() {
+
+	bc := NewBlockChain()
+	if bc == nil {
+		return
+	}
+
+	defer bc.db.Close()
+
+	it := bc.NewIterator()
+
+	for {
+		block := it.Next()
+
+		fmt.Printf("\n+++++++++++++++ 新的区块 +++++++++++++++++\n")
+		for _, tx := range block.Transactions {
+			fmt.Printf("tx : %v\n", tx)
+		}
+
+		if len(block.PrevBlockHash) == 0 {
+			break
+		}
 	}
 }

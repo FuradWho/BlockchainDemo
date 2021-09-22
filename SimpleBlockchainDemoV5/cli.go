@@ -6,6 +6,25 @@ import (
 	"strconv"
 )
 
+//使用命令行分析
+//
+//1. 所有的支配动作交给命令行来做
+//2. 主函数只需要调用命令行结构即可
+//3. 根据输入的不同命令，命令行做相应动作
+//1. addBlock
+//2. printChain
+//
+//
+//
+//CLI : command line的缩写
+//
+//type CLI struct {
+//	 bc *BlockChain
+//}
+//
+//
+//
+
 const Usage = `
 	./blockchain createBlockChain 地址 "创建区块链"
 	./blockchain printChain          打印区块链
@@ -13,6 +32,7 @@ const Usage = `
 	./blockchain send FROM TO AMOUNT MINER DATA "转账命令"
 	./blockchain createWallet "创建钱包"
 	./blockchain listAddresses "打印所有的钱包地址"
+	./blockchain printTx "打印所有交易"
 `
 
 type CLI struct {
@@ -71,6 +91,10 @@ func (cli *CLI) Run() {
 	case "listAddresses":
 		fmt.Printf("打印钱包地址命令被调用\n")
 		cli.ListAddresses()
+
+	case "printTx":
+		fmt.Printf("打印交易命令被调用\n")
+		cli.PrintTx()
 
 	default:
 		fmt.Printf("无效的命令，请检查\n")
