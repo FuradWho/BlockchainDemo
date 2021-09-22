@@ -63,7 +63,7 @@ func (output *TXOutput) Lock(address string) {
 	//25字节
 	decodeInfo := base58.Decode(address)
 
-	pubKeyHash := decodeInfo[1:len(decodeInfo)-4]
+	pubKeyHash := decodeInfo[1 : len(decodeInfo)-4]
 
 	output.PubKeyHash = pubKeyHash
 }
@@ -170,7 +170,7 @@ func NewTransaction(from, to string, amount float64, bc *BlockChain) *Transactio
 	var outputs []TXOutput
 
 	//3. 将outputs转成inputs
-	for txid /*0x333*/ , indexes := range utxos {
+	for txid /*0x333*/, indexes := range utxos {
 		for _, i /*0, 1*/ := range indexes {
 			input := TXInput{[]byte(txid), i, nil, publickKey}
 			inputs = append(inputs, input)
@@ -320,7 +320,7 @@ func (tx *Transaction) Verify(prevTXs map[string]Transaction) bool {
 		r := big.Int{}
 		s := big.Int{}
 
-		rData := signature[: len(signature)/2]
+		rData := signature[:len(signature)/2]
 		sData := signature[len(signature)/2:]
 
 		r.SetBytes(rData)
@@ -335,7 +335,7 @@ func (tx *Transaction) Verify(prevTXs map[string]Transaction) bool {
 		x := big.Int{}
 		y := big.Int{}
 
-		xData := pubKeyBytes[: len(pubKeyBytes)/2]
+		xData := pubKeyBytes[:len(pubKeyBytes)/2]
 		yData := pubKeyBytes[len(pubKeyBytes)/2:]
 
 		x.SetBytes(xData)
@@ -378,15 +378,10 @@ func (tx *Transaction) String() string {
 	//11111, 2222, 3333, 44444, 5555
 
 	//`11111
-	 //2222
-	 //3333
-	 //44444
-	 //5555`
+	//2222
+	//3333
+	//44444
+	//5555`
 
 	return strings.Join(lines, "\n")
 }
-
-
-
-
-
